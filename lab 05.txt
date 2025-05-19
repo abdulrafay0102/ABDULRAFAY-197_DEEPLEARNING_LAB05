@@ -1,0 +1,114 @@
+#ABDUL RAFAY / 2022F-BSE-197 / LAB 05 / TASK 01:
+import numpy as np
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+# Prepare Data (OR Gate)
+X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])  # Inputs
+y = np.array([[0], [1], [1], [1]])  # Outputs
+# Function to create and train the model
+def create_and_train_model(hidden_layers):
+    model = Sequential()
+    # First hidden layer
+    model.add(Dense(hidden_layers[0], input_dim=2, activation='relu'))    
+    # Second hidden layer
+    model.add(Dense(hidden_layers[1], activation='relu'))    
+    # Output layer
+    model.add(Dense(1, activation='sigmoid'))    
+    # Compile the model
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])    
+    # Train the model
+    model.fit(X, y, epochs=200, verbose=0)  # Set verbose to 0 for less output    
+    # Evaluate model
+    loss, accuracy = model.evaluate(X, y, verbose=0)
+    predictions = model.predict(X)    
+    return accuracy, predictions
+# Change the number of neurons in both hidden layers
+hidden_layer_configs = [[3, 2], [6, 4], [2, 1]]
+for config in hidden_layer_configs:
+    accuracy, predictions = create_and_train_model(config)
+    print("ABDUL RAFAY / 2022F-BSE-197 / LAB 05 / TASK 01:\n")
+    print(f"Hidden Layers: {config}")
+    print(f"Training Accuracy: {accuracy:.4f}")
+    print("Predictions (Raw Output):\n", predictions)
+    print("Predictions (Rounded Output):\n", np.round(predictions))
+    print("-" * 40)
+*************************************************************************************************************************
+
+#ABDUL RAFAY / 2022F-BSE-197 / LAB 05 / TASK 02:
+import numpy as np
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+import time
+# Prepare Data (OR Gate)
+X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])  # Inputs
+y = np.array([[0], [1], [1], [1]])  # Outputs
+# Function to create and train the model
+def create_and_train_model(activation_function):
+    model = Sequential()    
+    # First hidden layer
+    model.add(Dense(4, input_dim=2, activation=activation_function))    
+    # Second hidden layer
+    model.add(Dense(2, activation=activation_function))    
+    # Output layer
+    model.add(Dense(1, activation='sigmoid'))    
+    # Compile the model
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])    
+    # Train the model and measure training time
+    start_time = time.time()
+    model.fit(X, y, epochs=200, verbose=0)  # Set verbose to 0 for less output
+    training_time = time.time() - start_time    
+    # Evaluate model
+    loss, accuracy = model.evaluate(X, y, verbose=0)
+    predictions = model.predict(X)    
+    return training_time, accuracy, predictions
+# Task 2: Compare activation functions
+activations = ['relu', 'tanh', 'sigmoid']
+for activation in activations:
+    training_time, accuracy, predictions = create_and_train_model(activation)
+    print("ABDUL RAFAY / 2022F-BSE-197 / LAB 05 / TASK 02:\n")
+    print(f"Activation Function: {activation.upper()}")
+    print(f"Training Time: {training_time:.4f} seconds")
+    print(f"Training Accuracy: {accuracy:.4f}")
+    print("Predictions (Raw Output):\n", predictions)
+    print("Predictions (Rounded Output):\n", np.round(predictions))
+    print("-" * 40)
+*************************************************************************************************************************************
+
+#ABDUL RAFAY / 2022F-BSE-197 / LAB 05 / TASK 03:
+import numpy as np
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+import time
+# Prepare Data (OR Gate)
+X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])  # Inputs
+y = np.array([[0], [1], [1], [1]])  # Outputs
+# Function to create and train the model
+def create_and_train_model(optimizer):
+    model = Sequential()    
+    # First hidden layer
+    model.add(Dense(4, input_dim=2, activation='relu'))    
+    # Second hidden layer
+    model.add(Dense(2, activation='relu'))    
+    # Output layer
+    model.add(Dense(1, activation='sigmoid'))    
+    # Compile the model with the specified optimizer
+    model.compile(loss='binary_crossentropy', optimizer=optimizer, metrics=['accuracy'])    
+    # Train the model and measure training time
+    start_time = time.time()
+    model.fit(X, y, epochs=200, verbose=0)  # Set verbose to 0 for less output
+    training_time = time.time() - start_time    
+    # Evaluate model
+    loss, accuracy = model.evaluate(X, y, verbose=0)
+    predictions = model.predict(X)    
+    return training_time, accuracy, predictions
+# Task 3: Compare optimizers
+optimizers = ['sgd', 'rmsprop', 'adamax']
+for optimizer in optimizers:
+    training_time, accuracy, predictions = create_and_train_model(optimizer)
+    print("ABDUL RAFAY / 2022F-BSE-197 / LAB 05 / TASK 03:\n")
+    print(f"Optimizer: {optimizer.upper()}")
+    print(f"Training Time: {training_time:.4f} seconds")
+    print(f"Training Accuracy: {accuracy:.4f}")
+    print("Predictions (Raw Output):\n", predictions)
+    print("Predictions (Rounded Output):\n", np.round(predictions))
+    print("-" * 40)
